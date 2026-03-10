@@ -4,6 +4,7 @@ import io.restassured.RestAssured;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 
 public class Basics {
 
@@ -11,12 +12,12 @@ public class Basics {
     public void basics() {
 
         // Validating AddPlace API
-
         // given: All the input details
         // when: Submit the API
         // then: Validate the response
         RestAssured.baseURI = "https://rahulshettyacademy.com/";
-        given().log().all().queryParam("key", "qaclick123").header("Content-Type", "application/json")
+        given().log().all().queryParam("key", "qaclick123")
+                .header("Content-Type", "application/json")
                 .body("{\n" +
                         "    \"location\": {\n" +
                         "        \"lat\": -38.383494,\n" +
@@ -33,6 +34,10 @@ public class Basics {
                         "    \"website\": \"http://google.com\",\n" +
                         "    \"language\": \"French-IN\"\n" +
                         "}").when().post("maps/api/place/add/json")
-                .then().log().all().assertThat().statusCode(200);
+                .then().log().all()
+                .assertThat().statusCode(200)
+                .body("scope", equalTo("APP"))
+                .body("status", equalTo("OK"))
+                .header("Server", "Apache/2.4.18 (Ubuntu)");
     }
 }
