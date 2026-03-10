@@ -38,6 +38,6 @@ public class Basics {
                 .assertThat().statusCode(200)
                 .body("scope", equalTo("APP"))
                 .body("status", equalTo("OK"))
-                .header("Server", "Apache/2.4.18 (Ubuntu)");
+                .header("Server", "Apache/2.4.52 (Ubuntu)");
     }
 }
